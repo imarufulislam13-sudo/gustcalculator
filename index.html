@@ -1,0 +1,225 @@
+<style>
+.gfc-sheet * { margin:0; padding:0; box-sizing:border-box; }
+.gfc-sheet { max-width:11in; margin:0 auto; background:#fff; border:2px solid #333; font-family:'Times New Roman',serif; font-size:16px; line-height:1.4; }
+.gfc-header { border-bottom:2px solid #333; display:flex; flex-wrap:wrap; }
+.gfc-header-left { flex:1; text-align:center; padding:15px; border-right:1px solid #333; min-width:250px; }
+.gfc-header-right { width:250px; }
+.gfc-title { font-size:22px; font-weight:bold; margin-bottom:5px; }
+.gfc-subtitle { font-size:15px; font-style:italic; margin-bottom:3px; }
+.gfc-info-row { display:flex; border-bottom:1px solid #333; min-height:30px; }
+.gfc-info-row:last-child { border-bottom:none; }
+.gfc-info-label { width:90px; padding:6px 8px; border-right:1px solid #333; font-weight:bold; background:#f0f0f0; font-size:14px; }
+.gfc-info-value { flex:1; padding:6px 8px; }
+.gfc-info-value input { border:none; background:transparent; width:100%; font-family:inherit; font-size:14px; outline:none; }
+.gfc-main { display:flex; flex-wrap:wrap; }
+.gfc-left { width:300px; border-right:1px solid #333; }
+.gfc-section-title { background:#e0e0e0; font-weight:bold; padding:10px; border-bottom:1px solid #333; font-size:17px; text-align:center; }
+.gfc-param-row { display:flex; border-bottom:1px solid #ccc; min-height:35px; align-items:center; }
+.gfc-param-label { flex:1; padding:6px 10px; font-size:14px; }
+.gfc-param-value { padding-right:10px; display:flex; align-items:center; gap:4px; }
+.gfc-param-value input, .gfc-param-value select { width:75px; border:1px solid #999; border-radius:4px; text-align:center; font-size:14px; padding:5px 3px; }
+.gfc-param-value input[readonly] { background:#f5f5f5; color:#555; }
+.gfc-right { flex:1; min-width:300px; }
+.gfc-calc-row { display:flex; border-bottom:1px solid #ccc; min-height:28px; align-items:center; font-size:13px; }
+.gfc-calc-desc { flex:1.5; padding:5px 8px; border-right:1px solid #ccc; }
+.gfc-calc-val { width:65px; padding:5px 4px; text-align:center; border-right:1px solid #ccc; font-weight:bold; color:#c0392b; background:#fefefe; }
+.gfc-calc-form { flex:2; padding:5px 6px; text-align:center; border-right:1px solid #ccc; font-size:12px; font-family:monospace; }
+.gfc-calc-ref { width:90px; padding:5px 4px; text-align:center; font-size:11px; color:#666; }
+.gfc-final { border-top:2px solid #333; border-bottom:2px solid #333; background:#f0f8ff; font-weight:bold; font-size:15px; }
+.gfc-final .gfc-calc-val { color:#0056b3; font-size:17px; background:#e7f1ff; }
+.gfc-print-btn { display:block; margin:15px auto; background:#28a745; color:#fff; border:none; padding:10px 20px; font-size:15px; border-radius:5px; cursor:pointer; }
+.gfc-print-btn:hover { background:#218838; }
+.gfc-standards { text-align:center; padding:8px; font-weight:bold; font-size:14px; background:#fff3cd; border-bottom:1px solid #333; }
+.gfc-error { display:none; margin:10px; padding:8px 10px; border:1px solid #b00020; background:#fff3f5; color:#b00020; font-size:13px; border-radius:4px; }
+.gfc-input-error { border-color:#b00020!important; background:#fff3f5!important; }
+@media(max-width:768px){ .gfc-left{width:100%;border-right:none;border-bottom:2px solid #333;} .gfc-calc-form,.gfc-calc-ref{display:none;} .gfc-header-right{width:100%;} }
+@media print { .gfc-print-btn{display:none!important;} .gfc-sheet{border:1px solid #000;} }
+</style>
+
+<div class="gfc-sheet" id="gfcSheet">
+  <div class="gfc-standards">ASCE 7-05 &nbsp;|&nbsp; BNBC 2020</div>
+  <div class="gfc-header">
+    <div class="gfc-header-left">
+      <div class="gfc-title">Gust Effect Factor Calculations</div>
+      <div class="gfc-subtitle">ASCE 7-05 Section 6.5.8</div>
+      <div class="gfc-subtitle"><em>Flexible or Dynamically Sensitive Structures</em></div>
+    </div>
+    <div class="gfc-header-right">
+      <div class="gfc-info-row"><div class="gfc-info-label">Project:</div><div class="gfc-info-value"><input type="text" id="gfc-job" placeholder="Project Name"></div></div>
+      <div class="gfc-info-row"><div class="gfc-info-label">Engineer:</div><div class="gfc-info-value"><input type="text" id="gfc-eng" placeholder="Name"></div></div>
+      <div class="gfc-info-row"><div class="gfc-info-label">Date:</div><div class="gfc-info-value"><input type="date" id="gfc-date"></div></div>
+    </div>
+  </div>
+  <div class="gfc-error" id="gfc-error" role="alert"></div>
+  <div class="gfc-main">
+    <div class="gfc-left">
+      <div class="gfc-section-title">Design Parameters</div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Time Period, T (sec)</div><div class="gfc-param-value"><input type="number" id="gfc-T" value="1.25" step="0.01" class="gfc-live"></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Frequency, n₁ (Hz)</div><div class="gfc-param-value"><input type="number" id="gfc-n1" readonly></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Wind Speed, V (mph)</div><div class="gfc-param-value"><input type="number" id="gfc-V" value="120" step="1" class="gfc-live"></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Exposure Category</div><div class="gfc-param-value"><select id="gfc-exp" class="gfc-live"><option value="B">B</option><option value="C" selected>C</option><option value="D">D</option></select></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Width, B (ft)</div><div class="gfc-param-value"><input type="number" id="gfc-B" value="85" step="0.1" class="gfc-live"></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Length, L (ft)</div><div class="gfc-param-value"><input type="number" id="gfc-L" value="50" step="1" class="gfc-live"></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Roof Height, h (ft)</div><div class="gfc-param-value"><input type="number" id="gfc-h" value="130" step="0.1" class="gfc-live"></div></div>
+      <div class="gfc-param-row"><div class="gfc-param-label">Damping, β (%)</div><div class="gfc-param-value"><input type="number" id="gfc-beta" value="5" step="1" class="gfc-live"></div></div>
+    </div>
+    <div class="gfc-right">
+      <div class="gfc-section-title">Calculations</div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Peak Factor g<sub>Q</sub></div><div class="gfc-calc-val" id="gfc-gQ">3.40</div><div class="gfc-calc-form">g₀ = 3.4</div><div class="gfc-calc-ref">Sec 6.5.8.1</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Peak Factor gᵥ</div><div class="gfc-calc-val" id="gfc-gv">3.40</div><div class="gfc-calc-form">gᵥ = 3.4</div><div class="gfc-calc-ref">Sec 6.5.8.1</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Peak Factor g<sub>R</sub></div><div class="gfc-calc-val" id="gfc-gR">4.10</div><div class="gfc-calc-form">√[2ln(3600n₁)]+0.577/√[2ln(3600n₁)]</div><div class="gfc-calc-ref">Eq 6-9</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Equiv. Height z̄ (ft)</div><div class="gfc-calc-val" id="gfc-z">78.0</div><div class="gfc-calc-form">z̄ = 0.6h ≥ z_min</div><div class="gfc-calc-ref">Table 6-2</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Mean Wind Speed V<sub>z</sub> (ft/s)</div><div class="gfc-calc-val" id="gfc-Vz">125</div><div class="gfc-calc-form">b(z̄/33)^α(88/60)V</div><div class="gfc-calc-ref">Eq 6-14</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Turbulence Intensity I<sub>z</sub></div><div class="gfc-calc-val" id="gfc-Iz">0.272</div><div class="gfc-calc-form">c(33/z̄)^(1/6)</div><div class="gfc-calc-ref">Eq 6-5</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Length Scale L<sub>z</sub> (ft)</div><div class="gfc-calc-val" id="gfc-Lz">388</div><div class="gfc-calc-form">ℓ(z̄/33)^ε</div><div class="gfc-calc-ref">Eq 6-7</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Background Response Q</div><div class="gfc-calc-val" id="gfc-Q">0.632</div><div class="gfc-calc-form">√[1/(1+0.63((B+h)/Lz)^0.63)]</div><div class="gfc-calc-ref">Eq 6-6</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Reduced Frequency N₁</div><div class="gfc-calc-val" id="gfc-N1">0.217</div><div class="gfc-calc-form">n₁Lz/Vz</div><div class="gfc-calc-ref">Eq 6-12</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Rₙ Value</div><div class="gfc-calc-val" id="gfc-Rn">0.085</div><div class="gfc-calc-form">7.47N₁/(1+10.3N₁)^(5/3)</div><div class="gfc-calc-ref">Eq 6-11</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Rₕ Value</div><div class="gfc-calc-val" id="gfc-Rh">0.319</div><div class="gfc-calc-form">1/η-(1-e^-2η)/2η²</div><div class="gfc-calc-ref">Eq 6-13</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">R<sub>B</sub> Value</div><div class="gfc-calc-val" id="gfc-RB">0.612</div><div class="gfc-calc-form">1/η-(1-e^-2η)/2η²</div><div class="gfc-calc-ref">Eq 6-13</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">R<sub>L</sub> Value</div><div class="gfc-calc-val" id="gfc-RL">0.355</div><div class="gfc-calc-form">1/η-(1-e^-2η)/2η²</div><div class="gfc-calc-ref">Eq 6-13</div></div>
+      <div class="gfc-calc-row"><div class="gfc-calc-desc">Resonant Response R</div><div class="gfc-calc-val" id="gfc-R">0.561</div><div class="gfc-calc-form">√[(1/β)Rn·Rh·RB(0.53+0.47RL)]</div><div class="gfc-calc-ref">Eq 6-10</div></div>
+      <div class="gfc-calc-row gfc-final"><div class="gfc-calc-desc">Gust Effect Factor, G<sub>f</sub></div><div class="gfc-calc-val" id="gfc-Gf">0.988</div><div class="gfc-calc-form">0.925(1+1.7Iz√(gQ²Q²+gR²R²))/(1+1.7gvIz)</div><div class="gfc-calc-ref">Eq 6-8</div></div>
+    </div>
+  </div>
+</div>
+<button class="gfc-print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+
+<script>
+//<![CDATA[
+(function () {
+  'use strict';
+
+  function initGfcCalculator() {
+    var sheet = document.getElementById('gfcSheet');
+    if (!sheet || sheet.getAttribute('data-gfc-ready') === '1') return;
+    sheet.setAttribute('data-gfc-ready', '1');
+
+    function byId(id) { return document.getElementById(id); }
+    function numberValue(id) { return parseFloat(byId(id).value); }
+    function setText(id, value, decimals) {
+      byId(id).textContent = Number.isFinite(value) ? value.toFixed(decimals) : '—';
+    }
+    function clearErrors() {
+      var fields = sheet.querySelectorAll('input, select');
+      for (var i = 0; i < fields.length; i++) fields[i].classList.remove('gfc-input-error');
+      var box = byId('gfc-error');
+      box.style.display = 'none';
+      box.textContent = '';
+    }
+    function showError(message, ids) {
+      var box = byId('gfc-error');
+      box.textContent = message;
+      box.style.display = 'block';
+      for (var i = 0; i < ids.length; i++) {
+        var field = byId(ids[i]);
+        if (field) field.classList.add('gfc-input-error');
+      }
+    }
+    function responseFactor(eta) {
+      if (Math.abs(eta) < 1e-8) return 1;
+      return (1 / eta) - ((1 - Math.exp(-2 * eta)) / (2 * eta * eta));
+    }
+
+    window.gfcCalc = function () {
+      clearErrors();
+
+      var T = numberValue('gfc-T');
+      var V = numberValue('gfc-V');
+      var B = numberValue('gfc-B');
+      var L = numberValue('gfc-L');
+      var h = numberValue('gfc-h');
+      var beta = numberValue('gfc-beta');
+      var exp = byId('gfc-exp').value;
+
+      var invalid = [];
+      if (!(T > 0)) invalid.push('gfc-T');
+      if (!(V > 0)) invalid.push('gfc-V');
+      if (!(B > 0)) invalid.push('gfc-B');
+      if (!(L > 0)) invalid.push('gfc-L');
+      if (!(h > 0)) invalid.push('gfc-h');
+      if (!(beta > 0)) invalid.push('gfc-beta');
+
+      if (invalid.length) {
+        showError('T, V, B, L, h এবং damping অবশ্যই শূন্যের চেয়ে বড় হতে হবে।', invalid);
+        return;
+      }
+
+      var EC = {
+        B: { a: 0.250, b: 0.450, c: 0.300, l: 320, e: 0.333, zmin: 30 },
+        C: { a: 0.154, b: 0.650, c: 0.200, l: 500, e: 0.200, zmin: 15 },
+        D: { a: 0.111, b: 0.800, c: 0.150, l: 650, e: 0.150, zmin: 7 }
+      };
+
+      var K = EC[exp];
+      var n1 = 1 / T;
+      var gQ = 3.4;
+      var gv = 3.4;
+      var logTerm = 2 * Math.log(3600 * n1);
+
+      if (!(logTerm > 0)) {
+        showError('Time period-এর কারণে peak factor নির্ণয় করা যাচ্ছে না। একটি বাস্তবসম্মত positive T দিন।', ['gfc-T']);
+        return;
+      }
+
+      var gR = Math.sqrt(logTerm) + 0.577 / Math.sqrt(logTerm);
+      var z = Math.max(0.6 * h, K.zmin);
+      var Vz = K.b * Math.pow(z / 33, K.a) * (88 / 60) * V;
+      var Iz = K.c * Math.pow(33 / z, 1 / 6);
+      var Lz = K.l * Math.pow(z / 33, K.e);
+      var Q = Math.sqrt(1 / (1 + 0.63 * Math.pow((B + h) / Lz, 0.63)));
+      var N1 = n1 * Lz / Vz;
+      var Rn = 7.47 * N1 / Math.pow(1 + 10.3 * N1, 5 / 3);
+      var etaH = 4.6 * n1 * h / Vz;
+      var etaB = 4.6 * n1 * B / Vz;
+      var etaL = 15.4 * n1 * L / Vz;
+      var Rh = responseFactor(etaH);
+      var RB = responseFactor(etaB);
+      var RL = responseFactor(etaL);
+      var R = Math.sqrt((1 / (beta / 100)) * Rn * Rh * RB * (0.53 + 0.47 * RL));
+      var Gf = 0.925 * (1 + 1.7 * Iz * Math.sqrt(gQ * gQ * Q * Q + gR * gR * R * R)) /
+               (1 + 1.7 * gv * Iz);
+
+      byId('gfc-n1').value = n1.toFixed(3);
+      setText('gfc-gQ', gQ, 2);
+      setText('gfc-gv', gv, 2);
+      setText('gfc-gR', gR, 2);
+      setText('gfc-z', z, 1);
+      setText('gfc-Vz', Vz, 1);
+      setText('gfc-Iz', Iz, 3);
+      setText('gfc-Lz', Lz, 0);
+      setText('gfc-Q', Q, 3);
+      setText('gfc-N1', N1, 3);
+      setText('gfc-Rn', Rn, 3);
+      setText('gfc-Rh', Rh, 3);
+      setText('gfc-RB', RB, 3);
+      setText('gfc-RL', RL, 3);
+      setText('gfc-R', R, 3);
+      setText('gfc-Gf', Gf, 3);
+    };
+
+    var dateInput = byId('gfc-date');
+    if (dateInput && !dateInput.value) {
+      var now = new Date();
+      var localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString().slice(0, 10);
+      dateInput.value = localDate;
+    }
+
+    var liveFields = sheet.querySelectorAll('.gfc-live');
+    for (var i = 0; i < liveFields.length; i++) {
+      liveFields[i].addEventListener('input', window.gfcCalc);
+      liveFields[i].addEventListener('change', window.gfcCalc);
+    }
+
+    window.gfcCalc();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGfcCalculator);
+  } else {
+    initGfcCalculator();
+  }
+})();
+//]]>
+</script>
