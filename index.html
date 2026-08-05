@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free civil engineering calculators for concrete, RCC, steel, geotechnical, surveying, structural analysis and unit conversion.">
+  <title>Civil Engineering Calculators | Civil Engineering Fundamentals</title>
+  <style>
+    :root{
+      --cef-primary:#0f4c81;
+      --cef-secondary:#168aad;
+      --cef-accent:#f4a261;
+      --cef-bg:#f4f7fb;
+      --cef-card:#ffffff;
+      --cef-text:#1f2937;
+      --cef-muted:#64748b;
+      --cef-border:#dbe4ee;
+      --cef-shadow:0 10px 30px rgba(15,76,129,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--cef-bg);
+      color:var(--cef-text);
+      line-height:1.6;
+    }
+    a{text-decoration:none;color:inherit}
+    .cef-header{
+      background:linear-gradient(135deg,var(--cef-primary),var(--cef-secondary));
+      color:#fff;
+      padding:54px 20px 46px;
+      text-align:center;
+    }
+    .cef-header-inner{max-width:1000px;margin:auto}
+    .cef-brand{
+      display:inline-block;
+      font-size:14px;
+      font-weight:700;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+      opacity:.9;
+      margin-bottom:10px;
+    }
+    .cef-header h1{font-size:clamp(30px,5vw,52px);line-height:1.15;margin:0 0 14px}
+    .cef-header p{max-width:760px;margin:0 auto;font-size:17px;opacity:.94}
+    .cef-actions{margin-top:24px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .cef-btn{
+      display:inline-block;
+      padding:12px 20px;
+      border-radius:9px;
+      font-weight:700;
+      transition:.2s ease;
+    }
+    .cef-btn-primary{background:#fff;color:var(--cef-primary)}
+    .cef-btn-outline{border:1px solid rgba(255,255,255,.65);color:#fff}
+    .cef-btn:hover{transform:translateY(-2px)}
+    .cef-container{max-width:1180px;margin:auto;padding:34px 18px 50px}
+    .cef-section-title{text-align:center;margin-bottom:26px}
+    .cef-section-title h2{font-size:30px;margin:0 0 8px;color:var(--cef-primary)}
+    .cef-section-title p{margin:0;color:var(--cef-muted)}
+    .cef-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:20px;
+    }
+    .cef-card{
+      background:var(--cef-card);
+      border:1px solid var(--cef-border);
+      border-radius:16px;
+      padding:24px;
+      box-shadow:var(--cef-shadow);
+      display:flex;
+      flex-direction:column;
+      min-height:250px;
+      transition:.22s ease;
+    }
+    .cef-card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(15,76,129,.15)}
+    .cef-icon{
+      width:54px;height:54px;border-radius:14px;
+      display:grid;place-items:center;
+      background:#e8f2fb;
+      font-size:28px;
+      margin-bottom:15px;
+    }
+    .cef-card h3{margin:0 0 7px;font-size:22px;color:var(--cef-primary)}
+    .cef-card p{color:var(--cef-muted);margin:0 0 16px}
+    .cef-list{margin:0 0 20px;padding-left:20px;color:#475569;font-size:14px}
+    .cef-card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+    .cef-open{
+      display:inline-block;background:var(--cef-primary);color:#fff;
+      padding:10px 15px;border-radius:8px;font-size:14px;font-weight:700;
+    }
+    .cef-soon{
+      display:inline-block;background:#eef2f7;color:#64748b;
+      padding:9px 13px;border-radius:8px;font-size:13px;font-weight:700;
+    }
+    .cef-count{font-size:13px;color:var(--cef-muted)}
+    .cef-featured{
+      margin:34px 0 0;
+      padding:24px;
+      border-radius:16px;
+      background:#fff7ed;
+      border:1px solid #fed7aa;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
+      flex-wrap:wrap;
+    }
+    .cef-featured h2{margin:0 0 6px;color:#9a3412}
+    .cef-featured p{margin:0;color:#7c2d12}
+    .cef-featured .cef-open{background:#c2410c}
+    .cef-footer{
+      text-align:center;
+      padding:24px 18px;
+      background:#0b3154;
+      color:#dce9f5;
+      font-size:14px;
+    }
+    @media(max-width:900px){.cef-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:600px){
+      .cef-header{padding:42px 18px 36px}
+      .cef-grid{grid-template-columns:1fr}
+      .cef-card{min-height:auto}
+      .cef-featured{align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header class="cef-header">
+    <div class="cef-header-inner">
+      <div class="cef-brand">Civil Engineering Fundamentals</div>
+      <h1>Free Civil Engineering Calculators</h1>
+      <p>Practical online tools for students, engineers and construction professionals. All calculators are mobile-friendly and free to use.</p>
+      <div class="cef-actions">
+        <a class="cef-btn cef-btn-primary" href="#categories">Browse Calculators</a>
+        <a class="cef-btn cef-btn-outline" href="https://cefundamentals.blogspot.com/" target="_blank" rel="noopener">Visit Main Website</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="cef-container">
+    <section id="categories">
+      <div class="cef-section-title">
+        <h2>Calculator Categories</h2>
+        <p>Select a category to access engineering calculation tools.</p>
+      </div>
+
+      <div class="cef-grid">
+        <article class="cef-card">
+          <div class="cef-icon">🧱</div>
+          <h3>Concrete</h3>
+          <p>Concrete quantity, mix, strength and material estimation tools.</p>
+          <ul class="cef-list">
+            <li>Concrete volume</li>
+            <li>Cement–sand–aggregate quantity</li>
+            <li>Water–cement ratio</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">🏗️</div>
+          <h3>RCC Design</h3>
+          <p>Reinforced-concrete member design and detailing calculators.</p>
+          <ul class="cef-list">
+            <li>Beam reinforcement</li>
+            <li>Slab reinforcement</li>
+            <li>Development length</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">🔩</div>
+          <h3>Steel Design</h3>
+          <p>Steel section, connection and member capacity calculators.</p>
+          <ul class="cef-list">
+            <li>Tension member capacity</li>
+            <li>Compression member checks</li>
+            <li>Bolt and weld calculations</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">⛰️</div>
+          <h3>Geotechnical</h3>
+          <p>Soil, bearing-capacity, settlement and foundation tools.</p>
+          <ul class="cef-list">
+            <li>Allowable bearing capacity</li>
+            <li>Earth pressure</li>
+            <li>Soil unit-weight conversion</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">📐</div>
+          <h3>Surveying</h3>
+          <p>Coordinate, levelling, slope and field-survey calculators.</p>
+          <ul class="cef-list">
+            <li>Rise and fall</li>
+            <li>Bearing conversion</li>
+            <li>Coordinate distance</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">📊</div>
+          <h3>Structural Analysis</h3>
+          <p>Load, reaction, bending, deflection and wind-response tools.</p>
+          <ul class="cef-list">
+            <li>Beam reactions</li>
+            <li>Deflection checks</li>
+            <li>Gust effect factor</li>
+          </ul>
+          <div class="cef-card-footer">
+            <a class="cef-open" href="./gust-effect/" aria-label="Open Gust Effect Factor Calculator">Open Tools</a>
+            <span class="cef-count">1 available</span>
+          </div>
+        </article>
+
+        <article class="cef-card">
+          <div class="cef-icon">🔄</div>
+          <h3>Unit Converter</h3>
+          <p>Common civil and structural engineering unit conversions.</p>
+          <ul class="cef-list">
+            <li>Force and stress</li>
+            <li>Length and area</li>
+            <li>Moment and pressure</li>
+          </ul>
+          <div class="cef-card-footer"><span class="cef-soon">Coming Soon</span><span class="cef-count">3 planned</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cef-featured">
+      <div>
+        <h2>Available Now: Gust Effect Factor Calculator</h2>
+        <p>Realtime calculation for flexible or dynamically sensitive structures.</p>
+      </div>
+      <a class="cef-open" href="./gust-effect/">Launch Calculator ↗</a>
+    </section>
+  </main>
+
+  <footer class="cef-footer">
+    © 2026 Civil Engineering Fundamentals · Free engineering resources for educational and professional use.
+  </footer>
+</body>
+</html>
