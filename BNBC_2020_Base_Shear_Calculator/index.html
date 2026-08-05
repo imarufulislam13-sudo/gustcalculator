@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free BNBC 2020 seismic base shear calculator by Civil Engineering Fundamentals.">
+<title>BNBC 2020 Base Shear Calculator | Civil Engineering Fundamentals</title>
+<style>
+:root{
+  --bs-primary:#0f4c81;--bs-secondary:#168aad;--bs-accent:#f59e0b;
+  --bs-bg:#f4f7fb;--bs-card:#fff;--bs-text:#1f2937;--bs-muted:#64748b;
+  --bs-border:#dbe4ee;--bs-good:#0f766e;--bs-bad:#b91c1c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bs-bg);color:var(--bs-text);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+.bs-wrap{max-width:1180px;margin:auto;padding:22px}
+.bs-top{background:linear-gradient(135deg,var(--bs-primary),var(--bs-secondary));color:#fff;border-radius:18px;padding:30px;box-shadow:0 12px 32px rgba(15,76,129,.18)}
+.bs-brand{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;opacity:.9}
+.bs-top h1{margin:7px 0 8px;font-size:clamp(28px,4vw,43px);line-height:1.15}
+.bs-top p{margin:0;max-width:850px;opacity:.94}
+.bs-layout{display:grid;grid-template-columns:390px 1fr;gap:20px;margin-top:20px}
+.bs-card{background:var(--bs-card);border:1px solid var(--bs-border);border-radius:16px;box-shadow:0 9px 28px rgba(15,76,129,.08);overflow:hidden}
+.bs-card-title{padding:15px 18px;background:#edf5fc;border-bottom:1px solid var(--bs-border);font-size:18px;font-weight:800;color:var(--bs-primary)}
+.bs-form{padding:18px}
+.bs-group{margin-bottom:14px}
+.bs-group label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}
+.bs-help{display:block;font-size:12px;color:var(--bs-muted);font-weight:400;margin-top:3px}
+.bs-group input,.bs-group select{
+  width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;
+  color:var(--bs-text);font-size:14px;outline:none
+}
+.bs-group input:focus,.bs-group select:focus{border-color:var(--bs-secondary);box-shadow:0 0 0 3px rgba(22,138,173,.13)}
+.bs-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bs-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.bs-btn{border:0;border-radius:9px;padding:12px 14px;font-weight:800;cursor:pointer;font-size:14px}
+.bs-btn-main{background:var(--bs-primary);color:#fff}.bs-btn-main:hover{background:#0b3b65}
+.bs-btn-alt{background:#e2e8f0;color:#334155}.bs-btn-alt:hover{background:#cbd5e1}
+.bs-alert{display:none;margin:0 18px 18px;padding:11px 13px;border-radius:9px;font-size:13px}
+.bs-alert.bad{display:block;background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+.bs-alert.good{display:block;background:#ccfbf1;color:#115e59;border:1px solid #99f6e4}
+.bs-results{padding:18px}
+.bs-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:17px}
+.bs-kpi{padding:15px;border-radius:13px;background:#f8fafc;border:1px solid var(--bs-border);text-align:center}
+.bs-kpi small{display:block;color:var(--bs-muted);font-weight:700}
+.bs-kpi strong{display:block;color:var(--bs-primary);font-size:25px;margin-top:5px}
+.bs-kpi span{font-size:12px;color:var(--bs-muted)}
+.bs-table-wrap{overflow:auto}
+.bs-table{width:100%;border-collapse:collapse;font-size:14px;min-width:680px}
+.bs-table th,.bs-table td{border:1px solid var(--bs-border);padding:10px 11px;text-align:left}
+.bs-table th{background:#eef5fb;color:var(--bs-primary)}
+.bs-table td:nth-child(2){font-weight:800;color:#b45309}
+.bs-note{padding:16px 18px;background:#fff7ed;border-top:1px solid #fed7aa;color:#7c2d12;font-size:13px}
+.bs-equations{margin-top:20px;padding:18px}
+.bs-equations h2{color:var(--bs-primary);margin:0 0 12px}
+.bs-eq{background:#f8fafc;border-left:4px solid var(--bs-secondary);padding:12px 14px;margin:9px 0;font-family:Georgia,serif}
+.bs-footer{text-align:center;color:var(--bs-muted);font-size:13px;padding:24px 5px}
+.bs-hide-print{display:block}
+@media(max-width:900px){.bs-layout{grid-template-columns:1fr}.bs-summary{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:600px){.bs-wrap{padding:10px}.bs-top{border-radius:12px;padding:22px 17px}.bs-two,.bs-actions{grid-template-columns:1fr}.bs-summary{grid-template-columns:1fr}.bs-card{border-radius:12px}}
+@media print{
+  body{background:#fff}.bs-wrap{max-width:none;padding:0}.bs-top{box-shadow:none;border-radius:0}
+  .bs-layout{grid-template-columns:1fr}.bs-form,.bs-hide-print,.bs-actions{display:none!important}
+  .bs-card{box-shadow:none;break-inside:avoid}.bs-equations{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="bs-wrap">
+  <header class="bs-top">
+    <div class="bs-brand">Civil Engineering Fundamentals</div>
+    <h1>Seismic Base Shear Calculator</h1>
+    <p>Equivalent static base shear calculation following the BNBC 2020 response-spectrum procedure. Verify final design inputs, structural-system eligibility and code applicability before professional use.</p>
+  </header>
+
+  <div class="bs-layout">
+    <section class="bs-card">
+      <div class="bs-card-title">Input Parameters</div>
+      <form class="bs-form" id="bsForm">
+        <div class="bs-group">
+          <label for="buildingId">Building / Project ID</label>
+          <input id="buildingId" value="CEF-BS-001">
+        </div>
+
+        <div class="bs-two">
+          <div class="bs-group">
+            <label for="zone">Seismic Zone</label>
+            <select id="zone">
+              <option value="0.12">Zone I — Z = 0.12</option>
+              <option value="0.20" selected>Zone II — Z = 0.20</option>
+              <option value="0.28">Zone III — Z = 0.28</option>
+              <option value="0.36">Zone IV — Z = 0.36</option>
+            </select>
+          </div>
+          <div class="bs-group">
+            <label for="site">Site Class</label>
+            <select id="site">
+              <option value="SA">SA</option><option value="SB">SB</option>
+              <option value="SC" selected>SC</option><option value="SD">SD</option><option value="SE">SE</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="bs-group">
+          <label for="occupancy">Occupancy Category</label>
+          <select id="occupancy">
+            <option value="1">I — Low hazard (I = 1.00)</option>
+            <option value="1" selected>II — Standard occupancy (I = 1.00)</option>
+            <option value="1.25">III — Substantial hazard (I = 1.25)</option>
+            <option value="1.5">IV — Essential facility (I = 1.50)</option>
+          </select>
+        </div>
+
+        <div class="bs-group">
+          <label for="sdc">Seismic Design Category</label>
+          <select id="sdc">
+            <option value="B">B</option><option value="C" selected>C</option><option value="D">D</option>
+          </select>
+          <span class="bs-help">Confirm from BNBC 2020 Table 6.2.18 for the selected zone, site and occupancy.</span>
+        </div>
+
+        <div class="bs-group">
+          <label for="system">Seismic Force–Resisting System</label>
+          <select id="system"></select>
+        </div>
+
+        <div class="bs-group">
+          <label for="structureType">Approximate Period Structure Type</label>
+          <select id="structureType">
+            <option value="rc" selected>Concrete moment-resisting frame</option>
+            <option value="steel">Steel moment-resisting frame</option>
+            <option value="ebf">Eccentrically braced steel frame</option>
+            <option value="other">All other structural systems</option>
+          </select>
+        </div>
+
+        <div class="bs-two">
+          <div class="bs-group">
+            <label for="height">Building Height, h<sub>n</sub> (m)</label>
+            <input id="height" type="number" min="0.1" step="0.1" value="30">
+          </div>
+          <div class="bs-group">
+            <label for="weight">Seismic Weight, W (kN)</label>
+            <input id="weight" type="number" min="0.1" step="1" value="50000">
+          </div>
+        </div>
+
+        <div class="bs-group">
+          <label for="damping">Viscous Damping, ξ (%)</label>
+          <input id="damping" type="number" min="0.1" step="0.1" value="5">
+        </div>
+
+        <div class="bs-actions">
+          <button type="button" class="bs-btn bs-btn-main" id="calculateBtn">Calculate</button>
+          <button type="button" class="bs-btn bs-btn-alt" id="printBtn">Print / Save PDF</button>
+        </div>
+      </form>
+      <div id="message" class="bs-alert"></div>
+    </section>
+
+    <section class="bs-card">
+      <div class="bs-card-title">Calculation Results</div>
+      <div class="bs-results">
+        <div class="bs-summary">
+          <div class="bs-kpi"><small>Building Period</small><strong id="kpiT">—</strong><span>seconds</span></div>
+          <div class="bs-kpi"><small>Design Acceleration</small><strong id="kpiSa">—</strong><span>g</span></div>
+          <div class="bs-kpi"><small>Base Shear</small><strong id="kpiV">—</strong><span>kN</span></div>
+        </div>
+        <div class="bs-table-wrap">
+          <table class="bs-table">
+            <thead><tr><th>Parameter</th><th>Value</th><th>Unit</th><th>Reference / Formula</th></tr></thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bs-note" id="designNote">
+        This calculator is an educational design aid. Confirm the seismic design category, system limitations, irregularity provisions, minimum-force provisions and seismic weight definition directly from BNBC 2020.
+      </div>
+    </section>
+  </div>
+
+  <section class="bs-card bs-equations">
+    <h2>Calculation Basis</h2>
+    <div class="bs-eq">Approximate period: T = C<sub>t</sub> h<sub>n</sub><sup>m</sup></div>
+    <div class="bs-eq">Damping correction: η = √[10 / (5 + ξ)] ≥ 0.55</div>
+    <div class="bs-eq">Design spectral acceleration: S<sub>a</sub> = (2/3)(Z I / R) C<sub>s</sub></div>
+    <div class="bs-eq">Seismic base shear: V = S<sub>a</sub> W</div>
+  </section>
+
+  <footer class="bs-footer">© 2026 Civil Engineering Fundamentals · BNBC 2020 Base Shear Calculator</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const siteData={
+ SA:{S:1.00,TB:0.15,TC:0.40,TD:2.00},
+ SB:{S:1.20,TB:0.15,TC:0.50,TD:2.00},
+ SC:{S:1.15,TB:0.20,TC:0.60,TD:2.00},
+ SD:{S:1.35,TB:0.20,TC:0.80,TD:2.00},
+ SE:{S:1.40,TB:0.15,TC:0.50,TD:2.00}
+};
+
+const periodData={
+ rc:{name:"Concrete moment-resisting frame",Ct:0.0466,m:0.90},
+ steel:{name:"Steel moment-resisting frame",Ct:0.0724,m:0.80},
+ ebf:{name:"Eccentrically braced steel frame",Ct:0.0731,m:0.75},
+ other:{name:"All other structural systems",Ct:0.0488,m:0.75}
+};
+
+const systems=[
+ {g:"A. Bearing Wall",n:"Special reinforced concrete shear walls",R:5,O:2.5,Cd:5,B:"NL",C:"NL",D:50},
+ {g:"A. Bearing Wall",n:"Ordinary reinforced concrete shear walls",R:4,O:2.5,Cd:4,B:"NL",C:"NL",D:"NP"},
+ {g:"A. Bearing Wall",n:"Ordinary reinforced masonry shear walls",R:2,O:2.5,Cd:1.75,B:"NL",C:50,D:"NP"},
+ {g:"A. Bearing Wall",n:"Ordinary plain masonry shear walls",R:1.5,O:2.5,Cd:1.25,B:18,C:"NP",D:"NP"},
+ {g:"B. Building Frame",n:"Steel eccentrically braced frames — moment connections away from links",R:8,O:2,Cd:4,B:"NL",C:"NL",D:50},
+ {g:"B. Building Frame",n:"Steel eccentrically braced frames — non-moment connections away from links",R:7,O:2,Cd:4,B:"NL",C:"NL",D:50},
+ {g:"B. Building Frame",n:"Special steel concentrically braced frames",R:6,O:2,Cd:5,B:"NL",C:"NL",D:50},
+ {g:"B. Building Frame",n:"Ordinary steel concentrically braced frames",R:3.25,O:2,Cd:3.25,B:"NL",C:"NL",D:11},
+ {g:"B. Building Frame",n:"Special reinforced concrete shear walls",R:6,O:2.5,Cd:5,B:"NL",C:"NL",D:50},
+ {g:"B. Building Frame",n:"Ordinary reinforced concrete shear walls",R:5,O:2.5,Cd:4.25,B:"NL",C:"NL",D:"NP"},
+ {g:"C. Moment Frame",n:"Special steel moment frames",R:8,O:3,Cd:5.5,B:"NL",C:"NL",D:"NL"},
+ {g:"C. Moment Frame",n:"Intermediate steel moment frames",R:4.5,O:3,Cd:4,B:"NL",C:"NL",D:35},
+ {g:"C. Moment Frame",n:"Ordinary steel moment frames",R:3.5,O:3,Cd:3,B:"NL",C:"NL",D:"NP"},
+ {g:"C. Moment Frame",n:"Special reinforced concrete moment frames",R:8,O:3,Cd:5.5,B:"NL",C:"NL",D:"NL"},
+ {g:"C. Moment Frame",n:"Intermediate reinforced concrete moment frames",R:5,O:3,Cd:4.5,B:"NL",C:"NL",D:"NP"},
+ {g:"C. Moment Frame",n:"Ordinary reinforced concrete moment frames",R:3,O:3,Cd:2.5,B:"NL",C:"NP",D:"NP"},
+ {g:"D. Dual — Special MF",n:"Steel eccentrically braced frames",R:8,O:2.5,Cd:4,B:"NL",C:"NL",D:"NL"},
+ {g:"D. Dual — Special MF",n:"Special steel concentrically braced frames",R:7,O:2.5,Cd:5.5,B:"NL",C:"NL",D:"NL"},
+ {g:"D. Dual — Special MF",n:"Special reinforced concrete shear walls",R:7,O:2.5,Cd:5.5,B:"NL",C:"NL",D:"NL"},
+ {g:"D. Dual — Special MF",n:"Ordinary reinforced concrete shear walls",R:6,O:2.5,Cd:5,B:"NL",C:"NL",D:"NP"},
+ {g:"E. Dual — Intermediate MF",n:"Special steel concentrically braced frames",R:6,O:2.5,Cd:5,B:"NL",C:"NL",D:11},
+ {g:"E. Dual — Intermediate MF",n:"Special reinforced concrete shear walls",R:6.5,O:2.5,Cd:5,B:"NL",C:"NL",D:50},
+ {g:"E. Dual — Intermediate MF",n:"Ordinary reinforced masonry shear walls",R:3,O:3,Cd:3,B:"NL",C:50,D:"NP"},
+ {g:"E. Dual — Intermediate MF",n:"Ordinary reinforced concrete shear walls",R:5.5,O:2.5,Cd:4.5,B:"NL",C:"NL",D:"NP"},
+ {g:"F. Dual Wall-Frame",n:"Ordinary RC moment frames + ordinary RC shear walls",R:4.5,O:2.5,Cd:4,B:"NL",C:"NP",D:"NP"},
+ {g:"G. Other Steel",n:"Steel systems not specifically detailed for seismic resistance",R:3,O:3,Cd:3,B:"NL",C:"NL",D:"NP"}
+];
+
+const $=id=>document.getElementById(id);
+const systemSelect=$("system");
+let currentGroup="";
+systems.forEach((s,i)=>{
+ if(s.g!==currentGroup){
+   const og=document.createElement("optgroup");og.label=s.g;systemSelect.appendChild(og);currentGroup=s.g;
+ }
+ const opt=document.createElement("option");opt.value=i;opt.textContent=s.n;
+ systemSelect.lastElementChild.appendChild(opt);
+});
+systemSelect.value="13";
+
+function fmt(x,d=3){return Number.isFinite(x)?x.toFixed(d):"—"}
+function resultRow(a,b,c,d){return `<tr><td>${a}</td><td>${b}</td><td>${c}</td><td>${d}</td></tr>`}
+
+function calc(){
+ const h=parseFloat($("height").value), W=parseFloat($("weight").value), xi=parseFloat($("damping").value);
+ const Z=parseFloat($("zone").value), I=parseFloat($("occupancy").value);
+ const site=siteData[$("site").value], p=periodData[$("structureType").value];
+ const s=systems[parseInt(systemSelect.value,10)], sdc=$("sdc").value;
+ const msg=$("message");
+
+ if(!(h>0)||!(W>0)||!(xi>0)){
+   msg.className="bs-alert bad";msg.textContent="Building height, seismic weight and damping must be greater than zero.";return;
+ }
+
+ const T=p.Ct*Math.pow(h,p.m);
+ const eta=Math.max(Math.sqrt(10/(5+xi)),0.55);
+ let Cs,branch;
+ if(T<=site.TB){Cs=site.S*(1+(T/site.TB)*(2.5*eta-1));branch="0 ≤ T ≤ TB"}
+ else if(T<=site.TC){Cs=2.5*site.S*eta;branch="TB ≤ T ≤ TC"}
+ else if(T<=site.TD){Cs=2.5*site.S*eta*(site.TC/T);branch="TC ≤ T ≤ TD"}
+ else {Cs=2.5*site.S*eta*(site.TC*site.TD/(T*T));branch="TD ≤ T"}
+
+ const Sa=(2/3)*(Z*I/s.R)*Cs;
+ const V=Sa*W;
+ const limit=s[sdc];
+ let allowed=true, limitText=limit;
+ if(limit==="NP") allowed=false;
+ else if(limit==="NL") limitText="No limit";
+ else if(h>Number(limit)) allowed=false;
+
+ $("kpiT").textContent=fmt(T,3);
+ $("kpiSa").textContent=fmt(Sa,4);
+ $("kpiV").textContent=fmt(V,1);
+
+ $("resultsBody").innerHTML=[
+ resultRow("Building / Project ID",$("buildingId").value||"—","—","User input"),
+ resultRow("Seismic Zone Coefficient, Z",fmt(Z,2),"—","BNBC 2020 Table 6.2.14/6.2.15"),
+ resultRow("Importance Factor, I",fmt(I,2),"—","BNBC 2020 Table 6.2.17"),
+ resultRow("Seismic Design Category",sdc,"—","Confirm using BNBC 2020 Table 6.2.18"),
+ resultRow("Soil Factor, S",fmt(site.S,2),"—","BNBC 2020 Table 6.2.16"),
+ resultRow("T<sub>B</sub>",fmt(site.TB,2),"sec","BNBC 2020 Table 6.2.16"),
+ resultRow("T<sub>C</sub>",fmt(site.TC,2),"sec","BNBC 2020 Table 6.2.16"),
+ resultRow("T<sub>D</sub>",fmt(site.TD,2),"sec","BNBC 2020 Table 6.2.16"),
+ resultRow("Height Limit",String(limitText),"m","BNBC 2020 Table 6.2.19"),
+ resultRow("Response Reduction Factor, R",fmt(s.R,2),"—","BNBC 2020 Table 6.2.19"),
+ resultRow("System Overstrength, Ω<sub>0</sub>",fmt(s.O,2),"—","BNBC 2020 Table 6.2.19"),
+ resultRow("Deflection Amplification, C<sub>d</sub>",fmt(s.Cd,2),"—","BNBC 2020 Table 6.2.19"),
+ resultRow("C<sub>t</sub>",fmt(p.Ct,4),"—","BNBC 2020 Table 6.2.20"),
+ resultRow("m",fmt(p.m,2),"—","BNBC 2020 Table 6.2.20"),
+ resultRow("Building Period, T",fmt(T,3),"sec","T = Ct × hₙᵐ"),
+ resultRow("Damping Correction, η",fmt(eta,3),"—","η = √[10/(5+ξ)] ≥ 0.55"),
+ resultRow("Spectrum Branch",branch,"—","BNBC 2020 Eq. 6.2.35"),
+ resultRow("Normalized Spectrum, C<sub>s</sub>",fmt(Cs,3),"—","BNBC 2020 Eq. 6.2.35"),
+ resultRow("Design Spectral Acceleration, S<sub>a</sub>",fmt(Sa,4),"g","(2/3)(ZI/R)Cs"),
+ resultRow("Seismic Base Shear, V",fmt(V,1),"kN","V = Sa × W")
+ ].join("");
+
+ msg.className=allowed?"bs-alert good":"bs-alert bad";
+ if(limit==="NP") msg.textContent=`Selected system is not permitted for Seismic Design Category ${sdc}.`;
+ else if(!allowed) msg.textContent=`Building height ${h.toFixed(1)} m exceeds the ${limit} m system limit for SDC ${sdc}.`;
+ else msg.textContent="Calculation completed. Selected system passes the displayed BNBC height-permission check.";
+
+ $("designNote").innerHTML=allowed
+ ? "System permission check passed for the selected SDC and height. Final design must still address irregularities, diaphragms, torsion, drift, P–Δ effects and all other applicable BNBC provisions."
+ : "<strong>Warning:</strong> The selected system/height combination is not permitted by the displayed Table 6.2.19 limitation.";
+}
+
+["zone","site","occupancy","sdc","system","structureType","height","weight","damping","buildingId"].forEach(id=>{
+ $(id).addEventListener(id==="buildingId"?"input":"change",calc);
+ if(["height","weight","damping"].includes(id)) $(id).addEventListener("input",calc);
+});
+$("calculateBtn").addEventListener("click",calc);
+$("printBtn").addEventListener("click",()=>{calc();window.print()});
+calc();
+})();
+</script>
+</body>
+</html>
