@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free civil engineering unit converter for length, area, volume, force, pressure, stress, moment, density, flow and Bangladesh land units.">
+<meta name="keywords" content="civil engineering unit converter, MPa to psi, kN to kip, kN m to kip ft, cft to m3, katha decimal converter">
+<meta name="theme-color" content="#0f4c81">
+<title>Civil Engineering Unit Converter | CEF</title>
+<style>
+:root{--primary:#0f4c81;--secondary:#168aad;--accent:#f4a261;--bg:#f4f7fb;--card:#fff;--text:#1f2937;--muted:#64748b;--border:#dbe4ee;--danger:#b42318;--shadow:0 12px 32px rgba(15,76,129,.11)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);line-height:1.55}button,input,select{font:inherit}
+header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:20px}.nav{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-weight:800;letter-spacing:.3px}.home{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.55);padding:8px 13px;border-radius:8px;font-weight:700}.hero{text-align:center;max-width:830px;margin:35px auto 30px;padding:0 18px}.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.12;margin:0 0 12px;color:var(--primary)}.hero p{margin:0;color:var(--muted);font-size:17px}
+main{max-width:1120px;margin:auto;padding:0 18px 50px}.toolbar{display:grid;grid-template-columns:1fr auto;gap:12px;margin-bottom:18px}.search,.precision{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 14px}.search{width:100%}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:20px}.categories{background:#fff;border:1px solid var(--border);border-radius:15px;padding:10px;box-shadow:var(--shadow);align-self:start;position:sticky;top:14px}.cat{width:100%;border:0;background:transparent;text-align:left;padding:11px 12px;border-radius:8px;color:#334155;cursor:pointer;font-weight:700;display:flex;justify-content:space-between;gap:10px}.cat:hover{background:#edf6fc}.cat.active{background:var(--primary);color:#fff}
+.converter{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:clamp(18px,4vw,34px);box-shadow:var(--shadow)}.converter h2{margin:0;color:var(--primary);font-size:28px}.hint{margin:5px 0 25px;color:var(--muted)}.convert-grid{display:grid;grid-template-columns:1fr 54px 1fr;gap:14px;align-items:end}.field label{display:block;font-weight:700;margin-bottom:7px}.field input,.field select{width:100%;border:1px solid #cbd5e1;border-radius:9px;padding:12px;background:#fff}.field input{font-size:22px;font-weight:700;color:var(--primary);margin-bottom:9px}.field input:focus,.field select:focus,.search:focus{outline:3px solid rgba(22,138,173,.18);border-color:var(--secondary)}.swap{height:45px;border:0;border-radius:50%;background:#e8f2fb;color:var(--primary);cursor:pointer;font-size:23px;font-weight:800}.swap:hover{background:var(--primary);color:#fff}.result{margin-top:24px;padding:18px;border-radius:12px;background:#edf6fc;border-left:5px solid var(--secondary)}.result-title{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase}.result-value{font-size:clamp(22px,4vw,34px);font-weight:800;color:var(--primary);overflow-wrap:anywhere}.formula{color:#475569;margin-top:5px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px}.action{border:0;background:var(--primary);color:#fff;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer}.action.secondary{background:#e8f2fb;color:var(--primary)}.note{margin-top:24px;color:#64748b;font-size:13px}.empty{display:none;text-align:center;padding:18px;color:var(--danger);font-weight:700}
+.quick{margin-top:26px}.quick h3{color:var(--primary)}.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick-item{background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px;font-size:14px}.quick-item b{display:block;color:var(--primary)}
+footer{text-align:center;background:#0b3154;color:#dce9f5;padding:23px 18px;font-size:14px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.categories{position:static;display:flex;overflow-x:auto;gap:6px;padding:8px}.cat{white-space:nowrap;width:auto}.convert-grid{grid-template-columns:1fr}.swap{justify-self:center;transform:rotate(90deg)}.toolbar{grid-template-columns:1fr}.quick-grid{grid-template-columns:1fr}.nav{align-items:flex-start}.brand{max-width:210px}}
+</style>
+</head>
+<body>
+<header><nav class="nav"><div class="brand">Civil Engineering Fundamentals</div><a class="home" href="./">← All Calculators</a></nav></header>
+<section class="hero"><h1>Civil Engineering Unit Converter</h1><p>Fast, accurate SI, Imperial and Bangladesh unit conversions for design, estimation, construction and study.</p></section>
+<main>
+<div class="toolbar"><input id="search" class="search" type="search" placeholder="Search category or unit — e.g. MPa, katha, kip-ft"><select id="precision" class="precision" aria-label="Decimal precision"><option value="2">2 decimals</option><option value="4" selected>4 decimals</option><option value="6">6 decimals</option><option value="8">8 decimals</option></select></div>
+<div class="layout">
+<aside id="categories" class="categories" aria-label="Conversion categories"></aside>
+<section>
+<div id="empty" class="empty">No matching category or unit found.</div>
+<div id="converter" class="converter">
+<h2 id="title"></h2><p id="hint" class="hint"></p>
+<div class="convert-grid">
+<div class="field"><label for="fromValue">From</label><input id="fromValue" type="number" inputmode="decimal" value="1" step="any"><select id="fromUnit"></select></div>
+<button id="swap" class="swap" title="Swap units" aria-label="Swap units">⇄</button>
+<div class="field"><label for="toValue">To</label><input id="toValue" type="text" readonly><select id="toUnit"></select></div>
+</div>
+<div class="result" aria-live="polite"><div class="result-title">Conversion result</div><div id="resultValue" class="result-value"></div><div id="formula" class="formula"></div></div>
+<div class="actions"><button id="copy" class="action">Copy Result</button><button id="reset" class="action secondary">Reset</button></div>
+<p id="note" class="note"></p>
+</div>
+<div class="quick"><h3>Common Civil Engineering Conversions</h3><div class="quick-grid"><div class="quick-item"><b>1 MPa</b>145.0377 psi</div><div class="quick-item"><b>1 kN</b>0.2248 kip</div><div class="quick-item"><b>1 kN·m</b>0.7376 kip·ft</div><div class="quick-item"><b>1 m³</b>35.3147 ft³</div><div class="quick-item"><b>1 katha (BD)</b>720 ft²</div><div class="quick-item"><b>1 decimal</b>435.6 ft²</div></div></div>
+</section></div></main>
+<footer>© 2026 Civil Engineering Fundamentals · Verify critical design inputs against the governing code.</footer>
+<script>
+const data={
+length:{title:"Length",icon:"📏",base:"metre",hint:"Linear dimensions, member sizes, cover, pile depth and survey distance.",units:{"metre (m)":1,"millimetre (mm)":.001,"centimetre (cm)":.01,"kilometre (km)":1000,"inch (in)":.0254,"foot (ft)":.3048,"yard (yd)":.9144,"mile (mi)":1609.344,"micrometre (µm)":1e-6}},
+area:{title:"Area & Land",icon:"▱",base:"square metre",hint:"Floor, reinforcement, formwork and Bangladesh land-area conversions.",note:"Bangladesh land units use the common standard: 1 katha = 720 ft², 1 bigha = 20 katha.",units:{"square metre (m²)":1,"square millimetre (mm²)":1e-6,"square centimetre (cm²)":1e-4,"square kilometre (km²)":1e6,"square inch (in²)":.00064516,"square foot (ft²)":.09290304,"square yard (yd²)":.83612736,"acre":4046.8564224,"hectare (ha)":10000,"decimal / shotok":40.468564224,"katha (Bangladesh)":66.8901888,"bigha (Bangladesh)":1337.803776}},
+volume:{title:"Volume",icon:"🧊",base:"cubic metre",hint:"Concrete, excavation, earthwork, tank and liquid volume.",units:{"cubic metre (m³)":1,"cubic millimetre (mm³)":1e-9,"cubic centimetre (cm³)":1e-6,"litre (L)":.001,"millilitre (mL)":1e-6,"cubic inch (in³)":.000016387064,"cubic foot (ft³/cft)":.028316846592,"cubic yard (yd³)":.764554857984,"US gallon":.003785411784,"UK gallon":.00454609,"barrel (oil)":.158987294928}},
+mass:{title:"Mass",icon:"⚖️",base:"kilogram",hint:"Material mass and equipment weight stated as mass.",units:{"kilogram (kg)":1,"gram (g)":.001,"milligram (mg)":1e-6,"metric tonne (t)":1000,"pound mass (lb)":.45359237,"ounce (oz)":.028349523125,"US short ton":907.18474,"UK long ton":1016.0469088}},
+force:{title:"Force",icon:"↧",base:"newton",hint:"Structural loads, reactions, pile capacity and testing force.",units:{"newton (N)":1,"kilonewton (kN)":1000,"meganewton (MN)":1e6,"dyne":1e-5,"kilogram-force (kgf)":9.80665,"tonne-force (tf)":9806.65,"pound-force (lbf)":4.4482216152605,"kip (kips)":4448.2216152605}},
+pressure:{title:"Pressure & Stress",icon:"▦",base:"pascal",hint:"Concrete/steel strength, bearing pressure, modulus and fluid pressure.",units:{"pascal (Pa)":1,"kilopascal (kPa)":1000,"megapascal (MPa / N/mm²)":1e6,"gigapascal (GPa)":1e9,"newton/m² (N/m²)":1,"newton/mm² (N/mm²)":1e6,"bar":1e5,"millibar":100,"psi (lbf/in²)":6894.757293168,"psf (lbf/ft²)":47.8802589803,"ksi (kip/in²)":6894757.293168,"kgf/cm²":98066.5,"tonne-force/m²":9806.65,"metre water (mH₂O)":9806.65,"mm mercury (mmHg)":133.322387415}},
+moment:{title:"Moment & Torque",icon:"↶",base:"newton metre",hint:"Bending moment and torque used in structural analysis and design.",units:{"newton-metre (N·m)":1,"kilonewton-metre (kN·m)":1000,"newton-millimetre (N·mm)":.001,"kilonewton-millimetre (kN·mm)":1,"kgf-metre (kgf·m)":9.80665,"tonne-force metre (tf·m)":9806.65,"lbf-inch (lb·in)":.112984829028,"lbf-foot (lb·ft)":1.3558179483314,"kip-inch (kip·in)":112.984829028,"kip-foot (kip·ft)":1355.8179483314}},
+density:{title:"Density",icon:"◫",base:"kg/m³",hint:"Concrete, steel, soil, water and aggregate mass density.",units:{"kg/m³":1,"g/cm³":1000,"kg/L":1000,"tonne/m³":1000,"lb/ft³ (pcf mass)":16.01846337396,"lb/in³":27679.9047102,"slug/ft³":515.3788184}},
+unitweight:{title:"Unit Weight",icon:"🏋",base:"N/m³",hint:"Weight density of soil, concrete, masonry and liquids.",units:{"N/m³":1,"kN/m³":1000,"N/mm³":1e9,"kgf/m³":9.80665,"lbf/ft³ (pcf)":157.087463846,"kip/ft³ (kcf)":157087.463846,"lbf/in³":271447.14116}},
+velocity:{title:"Velocity",icon:"➜",base:"m/s",hint:"Wind speed, water velocity and traffic speed.",units:{"metre/second (m/s)":1,"kilometre/hour (km/h)":.277777777778,"foot/second (ft/s)":.3048,"mile/hour (mph)":.44704,"knot":.514444444444,"centimetre/second (cm/s)":.01}},
+flow:{title:"Flow Rate",icon:"💧",base:"m³/s",hint:"Water supply, drainage, pumping and hydraulic discharge.",units:{"m³/s":1,"m³/min":1/60,"m³/hour":1/3600,"litre/second (L/s)":.001,"litre/minute (L/min)":.001/60,"litre/day (L/day)":.001/86400,"ft³/s (cusec)":.028316846592,"ft³/min (cfm)":.028316846592/60,"US gallon/min (gpm)":.003785411784/60,"million litres/day (MLD)":1000/86400}},
+energy:{title:"Energy & Work",icon:"⚡",base:"joule",hint:"Work, strain energy, heat and impact energy.",units:{"joule (J / N·m)":1,"kilojoule (kJ)":1000,"megajoule (MJ)":1e6,"watt-hour (Wh)":3600,"kilowatt-hour (kWh)":3.6e6,"BTU":1055.05585262,"calorie (cal)":4.184,"kilocalorie (kcal)":4184,"ft·lbf":1.3558179483314}},
+power:{title:"Power",icon:"🔌",base:"watt",hint:"Pump, motor, plant and equipment power.",units:{"watt (W)":1,"kilowatt (kW)":1000,"megawatt (MW)":1e6,"horsepower mechanical (hp)":745.699871582,"metric horsepower (PS)":735.49875,"BTU/hour":.293071070172}},
+temperature:{title:"Temperature",icon:"🌡️",base:"Celsius",hint:"Concrete curing, materials and environmental temperature.",special:true,units:["Celsius (°C)","Fahrenheit (°F)","Kelvin (K)","Rankine (°R)"]},
+angle:{title:"Angle",icon:"∠",base:"radian",hint:"Surveying, structural geometry and rotation.",units:{"degree (°)":Math.PI/180,"radian (rad)":1,"gradian (gon)":Math.PI/200,"arcminute (′)":Math.PI/10800,"arcsecond (″)":Math.PI/648000}},
+slope:{title:"Slope & Gradient",icon:"📐",base:"ratio",hint:"Road, drainage, roof and surveying slope. Percent is rise/run × 100.",special:"slope",units:["percent (%)","ratio (1 in n)","decimal (rise/run)","angle (degree)"]},
+time:{title:"Time",icon:"⏱",base:"second",hint:"Construction scheduling, loading duration and hydraulic time.",units:{"second (s)":1,"minute (min)":60,"hour (h)":3600,"day":86400,"week":604800,"year (365 days)":31536000}}
+};
+const cats=document.getElementById("categories"),title=document.getElementById("title"),hint=document.getElementById("hint"),fromValue=document.getElementById("fromValue"),toValue=document.getElementById("toValue"),fromUnit=document.getElementById("fromUnit"),toUnit=document.getElementById("toUnit"),resultValue=document.getElementById("resultValue"),formula=document.getElementById("formula"),note=document.getElementById("note"),precision=document.getElementById("precision"),search=document.getElementById("search");
+let current="length";
+function unitNames(c){return Array.isArray(data[c].units)?data[c].units:Object.keys(data[c].units)}
+function renderCats(filter=""){cats.innerHTML="";let found=0;Object.entries(data).forEach(([key,c])=>{const hay=(c.title+" "+unitNames(key).join(" ")).toLowerCase();if(filter&&!hay.includes(filter.toLowerCase()))return;found++;const b=document.createElement("button");b.className="cat"+(key===current?" active":"");b.dataset.key=key;b.innerHTML="<span>"+c.icon+" "+c.title+"</span><span>›</span>";b.onclick=()=>selectCat(key);cats.appendChild(b)});document.getElementById("empty").style.display=found?"none":"block";document.getElementById("converter").style.display=found?"block":"none";if(found&&!cats.querySelector("[data-key='"+current+"']"))selectCat(cats.firstChild.dataset.key)}
+function fillSelect(el,names){el.innerHTML=names.map((n,i)=>"<option value='"+i+"'>"+n+"</option>").join("")}
+function selectCat(key){current=key;const c=data[key],names=unitNames(key);title.textContent=c.icon+" "+c.title;hint.textContent=c.hint;note.textContent=c.note||"Conversions use internationally recognized exact or standard engineering factors.";fillSelect(fromUnit,names);fillSelect(toUnit,names);toUnit.selectedIndex=Math.min(1,names.length-1);fromValue.value=1;renderCats(search.value);convert()}
+function tempToC(v,u){return u===0?v:u===1?(v-32)*5/9:u===2?v-273.15:(v-491.67)*5/9}
+function cToTemp(v,u){return u===0?v:u===1?v*9/5+32:u===2?v+273.15:(v+273.15)*9/5}
+function slopeToDecimal(v,u){return u===0?v/100:u===1?1/v:u===2?v:Math.tan(v*Math.PI/180)}
+function decimalToSlope(v,u){return u===0?v*100:u===1?1/v:u===2?v:Math.atan(v)*180/Math.PI}
+function format(v){if(!Number.isFinite(v))return "Undefined";const p=+precision.value;if(v!==0&&(Math.abs(v)>=1e9||Math.abs(v)<1e-6))return v.toExponential(p);return parseFloat(v.toFixed(p)).toLocaleString("en-US",{maximumFractionDigits:p})}
+function convert(){const v=parseFloat(fromValue.value),c=data[current],a=fromUnit.selectedIndex,b=toUnit.selectedIndex,names=unitNames(current);if(Number.isNaN(v)){toValue.value="";resultValue.textContent="Enter a value";formula.textContent="";return}let out;if(c.special===true)out=cToTemp(tempToC(v,a),b);else if(c.special==="slope")out=decimalToSlope(slopeToDecimal(v,a),b);else{const factors=Object.values(c.units);out=v*factors[a]/factors[b]}const shown=format(out);toValue.value=shown;resultValue.textContent=shown+" "+names[b];formula.textContent=format(v)+" "+names[a]+" = "+shown+" "+names[b]}
+fromValue.addEventListener("input",convert);fromUnit.addEventListener("change",convert);toUnit.addEventListener("change",convert);precision.addEventListener("change",convert);search.addEventListener("input",e=>renderCats(e.target.value));
+document.getElementById("swap").onclick=()=>{const a=fromUnit.selectedIndex;fromUnit.selectedIndex=toUnit.selectedIndex;toUnit.selectedIndex=a;const raw=toValue.value.replace(/,/g,"");if(raw&&raw!=="Undefined")fromValue.value=raw;convert()};
+document.getElementById("reset").onclick=()=>{fromValue.value=1;fromUnit.selectedIndex=0;toUnit.selectedIndex=1;convert()};
+document.getElementById("copy").onclick=async e=>{try{await navigator.clipboard.writeText(formula.textContent);const old=e.target.textContent;e.target.textContent="Copied!";setTimeout(()=>e.target.textContent=old,1200)}catch{e.target.textContent="Copy unavailable"}};
+selectCat(current);
+</script>
+</body>
+</html>
