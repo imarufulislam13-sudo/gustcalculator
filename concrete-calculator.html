@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free concrete calculators for volume, cement sand aggregate quantity, water-cement ratio, compressive strength, self weight and cost estimation.">
+<meta name="theme-color" content="#0f4c81"><title>Concrete Calculators | Civil Engineering Fundamentals</title>
+<style>
+:root{--navy:#0b3154;--blue:#0f4c81;--cyan:#168aad;--orange:#f4a261;--bg:#f3f7fa;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#d9e4ee;--green:#087f5b;--shadow:0 12px 34px rgba(15,76,129,.11)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}button,input,select{font:inherit}
+header{background:linear-gradient(135deg,var(--navy),var(--cyan));color:#fff;padding:18px 20px 82px}.nav{max-width:1160px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}.brand{font-weight:800;letter-spacing:.4px}.back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.55);padding:8px 13px;border-radius:9px;font-size:13px;font-weight:700}.hero{max-width:850px;margin:28px auto 0;text-align:center}.hero h1{font-size:clamp(30px,5vw,48px);line-height:1.1;margin:0 0 10px}.hero p{margin:0 auto;max-width:700px;color:#dff5ff}
+main{max-width:1160px;margin:-52px auto 45px;padding:0 18px}.shell{display:grid;grid-template-columns:255px 1fr;gap:20px}.tabs{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px;box-shadow:var(--shadow);align-self:start;position:sticky;top:12px}.tab{width:100%;border:0;background:transparent;padding:11px 12px;border-radius:9px;text-align:left;color:#334155;font-weight:700;cursor:pointer;margin:2px 0}.tab:hover{background:#edf6fc}.tab.active{background:var(--blue);color:#fff}
+.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:clamp(19px,4vw,32px);box-shadow:var(--shadow)}.panel.active{display:block}.panel h2{margin:0;color:var(--blue);font-size:27px}.intro{color:var(--muted);margin:6px 0 23px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.field label{display:block;font-weight:700;font-size:14px;margin-bottom:6px}.field input,.field select{width:100%;border:1px solid #bfd0dd;border-radius:9px;padding:11px;background:#fff}.field input:focus,.field select:focus{outline:3px solid rgba(22,138,173,.15);border-color:var(--cyan)}.run{border:0;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;font-weight:800;padding:12px 20px;cursor:pointer;margin-top:20px}.run:hover{filter:brightness(.94)}
+.results{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin-top:22px}.result{background:#edf7fc;border:1px solid #d3e9f4;border-radius:12px;padding:14px}.result .label{font-size:12px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);font-weight:700}.result .value{font-size:21px;font-weight:800;color:var(--blue);overflow-wrap:anywhere}.result.primary{background:linear-gradient(135deg,var(--blue),var(--cyan));border:0}.result.primary .label,.result.primary .value{color:#fff}.note{margin-top:18px;padding:12px 14px;background:#fff8ed;border-left:4px solid var(--orange);color:#7c4a15;font-size:13px}.formula{margin-top:13px;color:#64748b;font-size:13px}.error{display:none;margin-top:15px;background:#fff1f2;color:#b42318;border-left:4px solid #b42318;padding:11px;border-radius:6px}
+.shape-fields{display:none}.shape-fields.active{display:contents}
+footer{text-align:center;background:var(--navy);color:#dce9f5;padding:23px 16px;font-size:13px}
+@media(max-width:780px){header{padding:15px 14px 70px}.shell{grid-template-columns:1fr}.tabs{position:static;display:flex;overflow-x:auto;gap:5px}.tab{white-space:nowrap;width:auto}.grid,.grid.three,.results{grid-template-columns:1fr}.brand{max-width:200px}.hero{margin-top:22px}}
+@media print{header,.tabs,.run,footer{display:none!important}main{margin:0}.shell{display:block}.panel{box-shadow:none;border:0}.panel:not(.active){display:none}}
+</style></head>
+<body>
+<header><nav class="nav"><div class="brand">Civil Engineering Fundamentals</div><a class="back" href="./">← All Calculators</a></nav><div class="hero"><h1>Concrete Calculator Suite</h1><p>Practical tools for quantity estimation, nominal mix materials, water–cement ratio, compressive strength, self-weight and preliminary costing.</p></div></header>
+<main><div class="shell">
+<aside class="tabs">
+<button class="tab active" data-tab="volume">🧊 Concrete Volume</button>
+<button class="tab" data-tab="materials">🧱 Mix Materials</button>
+<button class="tab" data-tab="water">💧 Water–Cement Ratio</button>
+<button class="tab" data-tab="strength">🏋️ Compressive Strength</button>
+<button class="tab" data-tab="weight">⚖️ Concrete Self-Weight</button>
+<button class="tab" data-tab="cost">৳ Cost Estimator</button>
+</aside>
+<section>
+<div class="panel active" id="volume">
+<h2>Concrete Volume Calculator</h2><p class="intro">Calculate wet concrete for slabs, beams, columns, footings, piles and circular members.</p>
+<div class="grid"><div class="field"><label>Member shape</label><select id="vshape"><option value="rect">Rectangular / Slab / Beam</option><option value="cyl">Circular Column / Pile</option><option value="trap">Trapezoidal Footing</option></select></div><div class="field"><label>Dimension unit</label><select id="vunit"><option value="m">metre (m)</option><option value="ft">foot (ft)</option><option value="mm">millimetre (mm)</option></select></div></div>
+<div class="grid three" style="margin-top:15px">
+<div class="shape-fields active rect"><div class="field"><label>Length</label><input id="vl" type="number" value="5" min="0" step="any"></div><div class="field"><label>Width</label><input id="vw" type="number" value="4" min="0" step="any"></div><div class="field"><label>Depth / Thickness</label><input id="vd" type="number" value="0.15" min="0" step="any"></div></div>
+<div class="shape-fields cyl"><div class="field"><label>Diameter</label><input id="vdiam" type="number" value="0.45" min="0" step="any"></div><div class="field"><label>Height / Length</label><input id="vh" type="number" value="3" min="0" step="any"></div></div>
+<div class="shape-fields trap"><div class="field"><label>Bottom length</label><input id="vbl" type="number" value="2" min="0" step="any"></div><div class="field"><label>Bottom width</label><input id="vbw" type="number" value="2" min="0" step="any"></div><div class="field"><label>Top length</label><input id="vtl" type="number" value="0.6" min="0" step="any"></div><div class="field"><label>Top width</label><input id="vtw" type="number" value="0.6" min="0" step="any"></div><div class="field"><label>Depth</label><input id="vtd" type="number" value="0.5" min="0" step="any"></div></div>
+</div>
+<div class="grid" style="margin-top:15px"><div class="field"><label>Number of members</label><input id="vcount" type="number" value="1" min="1" step="1"></div><div class="field"><label>Wastage allowance (%)</label><input id="vwaste" type="number" value="3" min="0" step="any"></div></div>
+<button class="run" onclick="calcVolume()">Calculate Volume</button><div class="error" id="verror"></div>
+<div class="results"><div class="result primary"><div class="label">Required concrete</div><div class="value" id="vm3">—</div></div><div class="result"><div class="label">Cubic feet</div><div class="value" id="vcft">—</div></div><div class="result"><div class="label">Cubic yards</div><div class="value" id="vyd">—</div></div></div><div class="formula" id="vformula"></div>
+</div>
+
+<div class="panel" id="materials">
+<h2>Cement–Sand–Aggregate Calculator</h2><p class="intro">Estimate constituent quantities for nominal volumetric concrete mixes.</p>
+<div class="grid three"><div class="field"><label>Wet concrete volume (m³)</label><input id="mvol" type="number" value="1" min="0" step="any"></div><div class="field"><label>Dry-volume factor</label><input id="mdry" type="number" value="1.54" min="1" step="0.01"></div><div class="field"><label>Wastage (%)</label><input id="mwaste" type="number" value="0" min="0" step="any"></div><div class="field"><label>Cement ratio</label><input id="mc" type="number" value="1" min="0" step="any"></div><div class="field"><label>Sand ratio</label><input id="ms" type="number" value="1.5" min="0" step="any"></div><div class="field"><label>Coarse aggregate ratio</label><input id="ma" type="number" value="3" min="0" step="any"></div><div class="field"><label>Cement bag mass (kg)</label><input id="mbag" type="number" value="50" min="1" step="any"></div><div class="field"><label>Water–cement ratio</label><input id="mwc" type="number" value="0.50" min="0" step="0.01"></div></div>
+<button class="run" onclick="calcMaterials()">Calculate Materials</button><div class="error" id="merror"></div>
+<div class="results"><div class="result primary"><div class="label">Cement bags</div><div class="value" id="mbags">—</div></div><div class="result"><div class="label">Cement mass</div><div class="value" id="mkg">—</div></div><div class="result"><div class="label">Sand</div><div class="value" id="msand">—</div></div><div class="result"><div class="label">Coarse aggregate</div><div class="value" id="magg">—</div></div><div class="result"><div class="label">Mixing water</div><div class="value" id="mwater">—</div></div><div class="result"><div class="label">Dry volume</div><div class="value" id="mdryout">—</div></div></div>
+<div class="note">Uses cement bulk density = 1440 kg/m³. The dry-volume factor is an estimating assumption; adjust it to match your specification and aggregate condition.</div>
+</div>
+
+<div class="panel" id="water">
+<h2>Water–Cement Ratio Calculator</h2><p class="intro">Calculate mixing water or determine the actual w/c ratio from batch quantities.</p>
+<div class="grid"><div class="field"><label>Cement mass (kg)</label><input id="wcement" type="number" value="400" min="0" step="any"></div><div class="field"><label>Target w/c ratio</label><input id="wratio" type="number" value="0.45" min="0" step="0.01"></div><div class="field"><label>Actual water added (litre, optional)</label><input id="wactual" type="number" placeholder="e.g. 180" min="0" step="any"></div><div class="field"><label>Aggregate moisture correction (litre)</label><input id="wmoisture" type="number" value="0" step="any"></div></div>
+<button class="run" onclick="calcWater()">Calculate Water</button><div class="error" id="werror"></div>
+<div class="results"><div class="result primary"><div class="label">Target total water</div><div class="value" id="wtarget">—</div></div><div class="result"><div class="label">Water to add after correction</div><div class="value" id="wadd">—</div></div><div class="result"><div class="label">Actual w/c ratio</div><div class="value" id="wactualratio">—</div></div></div>
+<div class="note">For normal water, 1 litre ≈ 1 kg. Positive moisture correction means water already contributed by aggregates and is deducted from added water.</div>
+</div>
+
+<div class="panel" id="strength">
+<h2>Concrete Compressive Strength</h2><p class="intro">Calculate failure stress from testing-machine load for cube or cylinder specimens.</p>
+<div class="grid"><div class="field"><label>Specimen type</label><select id="stype"><option value="cube">Cube</option><option value="cyl">Cylinder</option></select></div><div class="field"><label>Failure load (kN)</label><input id="sload" type="number" value="800" min="0" step="any"></div><div class="field cube-dim"><label>Cube side (mm)</label><input id="sside" type="number" value="150" min="0" step="any"></div><div class="field cyl-dim" style="display:none"><label>Cylinder diameter (mm)</label><input id="sdiam" type="number" value="150" min="0" step="any"></div></div>
+<button class="run" onclick="calcStrength()">Calculate Strength</button><div class="error" id="serror"></div>
+<div class="results"><div class="result primary"><div class="label">Compressive strength</div><div class="value" id="smpa">—</div></div><div class="result"><div class="label">Strength in psi</div><div class="value" id="spsi">—</div></div><div class="result"><div class="label">Loaded area</div><div class="value" id="sarea">—</div></div></div>
+<div class="formula">Strength = failure load ÷ loaded cross-sectional area. Report and interpret results according to the applicable test standard.</div>
+</div>
+
+<div class="panel" id="weight">
+<h2>Concrete Self-Weight Calculator</h2><p class="intro">Convert concrete volume and unit weight into dead load, mass and distributed load.</p>
+<div class="grid three"><div class="field"><label>Concrete volume (m³)</label><input id="qvol" type="number" value="10" min="0" step="any"></div><div class="field"><label>Unit weight (kN/m³)</label><input id="quw" type="number" value="24" min="0" step="any"></div><div class="field"><label>Loaded area (m², optional)</label><input id="qarea" type="number" value="20" min="0" step="any"></div></div>
+<button class="run" onclick="calcWeight()">Calculate Self-Weight</button><div class="error" id="qerror"></div>
+<div class="results"><div class="result primary"><div class="label">Total dead load</div><div class="value" id="qkn">—</div></div><div class="result"><div class="label">Equivalent mass</div><div class="value" id="qmass">—</div></div><div class="result"><div class="label">Area load</div><div class="value" id="qpressure">—</div></div></div>
+</div>
+
+<div class="panel" id="cost">
+<h2>Concrete Material Cost Estimator</h2><p class="intro">Estimate constituent cost from previously calculated or manually entered quantities.</p>
+<div class="grid"><div class="field"><label>Cement quantity (bags)</label><input id="cbags" type="number" value="8" min="0" step="any"></div><div class="field"><label>Cement rate (৳/bag)</label><input id="crate" type="number" value="550" min="0" step="any"></div><div class="field"><label>Sand quantity (ft³)</label><input id="csand" type="number" value="15" min="0" step="any"></div><div class="field"><label>Sand rate (৳/ft³)</label><input id="csrate" type="number" value="55" min="0" step="any"></div><div class="field"><label>Aggregate quantity (ft³)</label><input id="cagg" type="number" value="30" min="0" step="any"></div><div class="field"><label>Aggregate rate (৳/ft³)</label><input id="carate" type="number" value="150" min="0" step="any"></div><div class="field"><label>Labour/equipment cost (৳)</label><input id="clabour" type="number" value="0" min="0" step="any"></div><div class="field"><label>Additional cost (%)</label><input id="cadd" type="number" value="5" min="0" step="any"></div></div>
+<button class="run" onclick="calcCost()">Calculate Cost</button><div class="error" id="cerror"></div>
+<div class="results"><div class="result"><div class="label">Cement cost</div><div class="value" id="ccementout">—</div></div><div class="result"><div class="label">Sand cost</div><div class="value" id="csandout">—</div></div><div class="result"><div class="label">Aggregate cost</div><div class="value" id="caggout">—</div></div><div class="result primary"><div class="label">Estimated total</div><div class="value" id="ctotal">—</div></div></div>
+<div class="note">Preliminary estimate only. Update rates for supplier, location, transport, VAT, pumping, testing and current market conditions.</div>
+</div>
+</section></div></main>
+<footer>© 2026 Civil Engineering Fundamentals · Calculations are for estimation and educational use; verify design values against project specifications and governing codes.</footer>
+<script>
+const $=id=>document.getElementById(id),num=id=>parseFloat($(id).value),fmt=(v,d=3)=>Number.isFinite(v)?v.toLocaleString("en-US",{maximumFractionDigits:d}):"—";
+function err(id,msg){const e=$(id);e.textContent=msg;e.style.display=msg?"block":"none";return !!msg}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab,.panel").forEach(x=>x.classList.remove("active"));b.classList.add("active");$(b.dataset.tab).classList.add("active")});
+$("vshape").onchange=()=>{document.querySelectorAll(".shape-fields").forEach(x=>x.classList.remove("active"));document.querySelector("."+$("vshape").value).classList.add("active")};
+$("stype").onchange=()=>{document.querySelector(".cube-dim").style.display=$("stype").value==="cube"?"block":"none";document.querySelector(".cyl-dim").style.display=$("stype").value==="cyl"?"block":"none"};
+function calcVolume(){const k={m:1,ft:.3048,mm:.001}[$("vunit").value],shape=$("vshape").value,count=num("vcount"),w=num("vwaste");let v=0,formula="";
+if(shape==="rect"){v=num("vl")*num("vw")*num("vd")*k**3;formula="V = length × width × depth"}
+if(shape==="cyl"){v=Math.PI*num("vdiam")**2/4*num("vh")*k**3;formula="V = πD²/4 × height"}
+if(shape==="trap"){const a1=num("vbl")*num("vbw"),a2=num("vtl")*num("vtw");v=num("vtd")/3*(a1+a2+Math.sqrt(a1*a2))*k**3;formula="Frustum V = h/3(A₁ + A₂ + √A₁A₂)"}
+if(err("verror",!(v>0&&count>0&&w>=0)?"Enter valid positive dimensions, count and wastage.":""))return;v*=count*(1+w/100);$("vm3").textContent=fmt(v)+" m³";$("vcft").textContent=fmt(v*35.3146667)+" ft³";$("vyd").textContent=fmt(v*1.30795062)+" yd³";$("vformula").textContent=formula+"; including "+fmt(w,2)+"% wastage."}
+function calcMaterials(){let vol=num("mvol"),dry=num("mdry"),waste=num("mwaste"),c=num("mc"),s=num("ms"),a=num("ma"),bag=num("mbag"),wc=num("mwc"),sum=c+s+a;if(err("merror",!(vol>0&&dry>0&&waste>=0&&c>0&&s>=0&&a>=0&&sum>0&&bag>0&&wc>=0)?"Enter valid material and mix values.":""))return;let dv=vol*dry*(1+waste/100),cv=dv*c/sum,sv=dv*s/sum,av=dv*a/sum,kg=cv*1440,bags=kg/bag,water=kg*wc;$("mbags").textContent=fmt(bags,2)+" bags";$("mkg").textContent=fmt(kg,1)+" kg";$("msand").textContent=fmt(sv)+" m³ / "+fmt(sv*35.3147)+" ft³";$("magg").textContent=fmt(av)+" m³ / "+fmt(av*35.3147)+" ft³";$("mwater").textContent=fmt(water,1)+" L";$("mdryout").textContent=fmt(dv)+" m³";$("cbags").value=bags.toFixed(2);$("csand").value=(sv*35.3147).toFixed(2);$("cagg").value=(av*35.3147).toFixed(2)}
+function calcWater(){let c=num("wcement"),r=num("wratio"),actual=parseFloat($("wactual").value),moist=num("wmoisture");if(err("werror",!(c>0&&r>=0&&Number.isFinite(moist))?"Enter valid cement, ratio and moisture values.":""))return;let target=c*r,add=Math.max(0,target-moist);$("wtarget").textContent=fmt(target,1)+" L";$("wadd").textContent=fmt(add,1)+" L";$("wactualratio").textContent=Number.isFinite(actual)?fmt(actual/c,3):"Not entered"}
+function calcStrength(){let load=num("sload"),cube=$("stype").value==="cube",d=cube?num("sside"):num("sdiam"),area=cube?d*d:Math.PI*d*d/4;if(err("serror",!(load>0&&d>0)?"Enter a positive failure load and specimen dimension.":""))return;let mpa=load*1000/area;$("smpa").textContent=fmt(mpa,2)+" MPa";$("spsi").textContent=fmt(mpa*145.037738,0)+" psi";$("sarea").textContent=fmt(area,1)+" mm²"}
+function calcWeight(){let v=num("qvol"),uw=num("quw"),a=num("qarea");if(err("qerror",!(v>0&&uw>0)?"Enter positive volume and unit weight.":""))return;let kn=v*uw;$("qkn").textContent=fmt(kn,2)+" kN";$("qmass").textContent=fmt(kn*1000/9.80665,0)+" kg";$("qpressure").textContent=a>0?fmt(kn/a,2)+" kN/m²":"Area not entered"}
+function calcCost(){let bags=num("cbags"),cr=num("crate"),sand=num("csand"),sr=num("csrate"),agg=num("cagg"),ar=num("carate"),lab=num("clabour"),add=num("cadd");if(err("cerror",[bags,cr,sand,sr,agg,ar,lab,add].some(v=>!Number.isFinite(v)||v<0)?"Enter valid non-negative quantities and rates.":""))return;let cc=bags*cr,sc=sand*sr,ac=agg*ar,total=(cc+sc+ac+lab)*(1+add/100);$("ccementout").textContent="৳ "+fmt(cc,0);$("csandout").textContent="৳ "+fmt(sc,0);$("caggout").textContent="৳ "+fmt(ac,0);$("ctotal").textContent="৳ "+fmt(total,0)}
+calcVolume();calcMaterials();calcWater();calcStrength();calcWeight();calcCost();
+</script></body></html>
