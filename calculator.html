@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Free Gust Factor Calculator for flexible and dynamically sensitive structures based on ASCE 7-05 and BNBC 2020.">
+<meta name="theme-color" content="#0f4c81">
+<title>Gust Factor Calculator | Civil Engineering Fundamentals</title>
 <style>
 .gfc-sheet * { margin:0; padding:0; box-sizing:border-box; }
 .gfc-sheet { max-width:11in; margin:0 auto; background:#fff; border:2px solid #333; font-family:'Times New Roman',serif; font-size:16px; line-height:1.4; }
@@ -34,13 +42,55 @@
 .gfc-input-error { border-color:#b00020!important; background:#fff3f5!important; }
 @media(max-width:768px){ .gfc-left{width:100%;border-right:none;border-bottom:2px solid #333;} .gfc-calc-form,.gfc-calc-ref{display:none;} .gfc-header-right{width:100%;} }
 @media print { .gfc-print-btn{display:none!important;} .gfc-sheet{border:1px solid #000;} }
+
+:root{--gfc-navy:#0b3154;--gfc-blue:#0f4c81;--gfc-cyan:#168aad;--gfc-sky:#eaf5fb;--gfc-gold:#f4a261;--gfc-ink:#1e293b;--gfc-muted:#64748b;--gfc-line:#d9e4ee}
+body{margin:0;background:linear-gradient(180deg,#eef6fb 0,#f7f9fc 360px);color:var(--gfc-ink);font-family:Arial,Helvetica,sans-serif}
+.gfc-pagehead{background:linear-gradient(135deg,var(--gfc-navy),var(--gfc-cyan));color:#fff;padding:18px 20px 72px;margin-bottom:-48px}
+.gfc-nav{max-width:11in;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.gfc-brand{font:700 14px Arial,sans-serif;letter-spacing:.5px;text-transform:uppercase}
+.gfc-back{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.55);padding:8px 13px;border-radius:9px;font:700 13px Arial,sans-serif;transition:.2s}
+.gfc-back:hover{background:#fff;color:var(--gfc-blue)}
+.gfc-sheet{position:relative;border:0;border-radius:18px;overflow:hidden;box-shadow:0 18px 55px rgba(11,49,84,.16);font-family:Arial,Helvetica,sans-serif;margin-bottom:18px}
+.gfc-standards{background:var(--gfc-navy);color:#dff5ff;border:0;padding:10px;letter-spacing:.6px}
+.gfc-header{border:0;background:linear-gradient(120deg,#fff,#f5fbff)}
+.gfc-header-left{padding:24px;border-color:var(--gfc-line)}
+.gfc-title{font-size:29px;color:var(--gfc-blue);line-height:1.15}
+.gfc-subtitle{color:var(--gfc-muted);font-family:Georgia,'Times New Roman',serif}
+.gfc-header-right{background:#f8fbfd}
+.gfc-info-row,.gfc-info-row:last-child{border-color:var(--gfc-line)}
+.gfc-info-label{background:#eaf3f9;border-color:var(--gfc-line);color:var(--gfc-blue)}
+.gfc-info-value input{font-family:Arial,Helvetica,sans-serif}
+.gfc-main{background:#fff}
+.gfc-left{border-color:var(--gfc-line);background:#fbfdff}
+.gfc-section-title{background:linear-gradient(90deg,var(--gfc-blue),var(--gfc-cyan));color:#fff;border:0;padding:12px;letter-spacing:.3px}
+.gfc-param-row,.gfc-calc-row{border-color:var(--gfc-line);transition:.15s}
+.gfc-param-row:hover,.gfc-calc-row:hover{background:#f3f9fd}
+.gfc-param-label{color:#334155}
+.gfc-param-value input,.gfc-param-value select{border:1px solid #b8ccdc;border-radius:7px;padding:6px 4px;color:var(--gfc-blue);font-weight:700;background:#fff}
+.gfc-param-value input:focus,.gfc-param-value select:focus{outline:3px solid rgba(22,138,173,.15);border-color:var(--gfc-cyan)}
+.gfc-param-value input[readonly]{background:#edf2f7;color:#475569}
+.gfc-calc-desc,.gfc-calc-form,.gfc-calc-val{border-color:var(--gfc-line)}
+.gfc-calc-val{color:#c2410c;background:#fff8f2}
+.gfc-calc-form{font-family:'Courier New',monospace;color:#475569}
+.gfc-calc-ref{color:#64748b}
+.gfc-final{border:0;background:linear-gradient(90deg,#e7f5ff,#eefbf7);box-shadow:inset 5px 0 0 var(--gfc-cyan);font-size:16px}
+.gfc-final .gfc-calc-val{background:var(--gfc-blue);color:#fff;font-size:19px}
+.gfc-error{border:0;border-left:5px solid #b42318;background:#fff1f2}
+.gfc-print-btn{margin:18px auto 40px;background:linear-gradient(135deg,var(--gfc-blue),var(--gfc-cyan));padding:12px 22px;border-radius:10px;box-shadow:0 8px 20px rgba(15,76,129,.2);font-weight:700;transition:.2s}
+.gfc-print-btn:hover{background:linear-gradient(135deg,var(--gfc-navy),var(--gfc-blue));transform:translateY(-2px)}
+.gfc-footnote{max-width:11in;margin:-24px auto 30px;text-align:center;color:var(--gfc-muted);font:13px Arial,sans-serif;padding:0 16px}
+@media(max-width:768px){.gfc-pagehead{padding:15px 12px 58px}.gfc-sheet{border-radius:12px;margin-left:10px;margin-right:10px}.gfc-title{font-size:24px}.gfc-header-left{padding:20px 14px}.gfc-brand{max-width:200px}.gfc-calc-desc{font-size:12px}.gfc-calc-val{width:74px}}
+@media print{body{background:#fff}.gfc-pagehead,.gfc-footnote{display:none!important}.gfc-sheet{box-shadow:none;border-radius:0;margin:0}.gfc-standards{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 </style>
+</head>
+<body>
+<div class="gfc-pagehead"><div class="gfc-nav"><div class="gfc-brand">Civil Engineering Fundamentals</div><a class="gfc-back" href="./">← All Calculators</a></div></div>
 
 <div class="gfc-sheet" id="gfcSheet">
   <div class="gfc-standards">ASCE 7-05 &nbsp;|&nbsp; BNBC 2020</div>
   <div class="gfc-header">
     <div class="gfc-header-left">
-      <div class="gfc-title">Gust Effect Factor Calculations</div>
+      <div class="gfc-title">Gust Factor Calculator</div>
       <div class="gfc-subtitle">ASCE 7-05 Section 6.5.8</div>
       <div class="gfc-subtitle"><em>Flexible or Dynamically Sensitive Structures</em></div>
     </div>
@@ -84,6 +134,7 @@
   </div>
 </div>
 <button class="gfc-print-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+<p class="gfc-footnote">Engineering calculation aid based on ASCE 7-05 Section 6.5.8. Verify final design values with the governing code and a qualified engineer.</p>
 
 <script>
 //<![CDATA[
@@ -223,3 +274,5 @@
 })();
 //]]>
 </script>
+</body>
+</html>
